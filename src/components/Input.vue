@@ -49,54 +49,66 @@ defineProps({
     ]"
   >
     <label class="input-label">{{ label }}</label>
-    <i v-if="startIcon" class="material-icons input-icon-start input-icons">{{
-      startIcon
-    }}</i>
-    <input
-      type="text"
-      :placeholder="placeholder"
-      :value="value"
-      :class="[size, fullWidth ? 'full' : '']"
-      v-if="!multiline"
-    />
-    <textarea
-      v-else
-      :placeholder="placeholder"
-      :value="value"
-      :rows="row"
-      :class="[size, fullWidth ? 'full' : '']"
-    />
 
-    <i v-if="endIcon" class="material-icons input-icon-end input-icons">{{
-      endIcon
-    }}</i>
+    <div :class="['input-wrapper', { full: fullWidth }]">
+      <i v-if="startIcon" class="material-icons input-icon-start input-icons">{{
+        startIcon
+      }}</i>
+      <input
+        type="text"
+        :placeholder="placeholder"
+        :value="value"
+        :class="[size, fullWidth ? 'full' : '']"
+        v-if="!multiline"
+      />
+      <textarea
+        v-else
+        :placeholder="placeholder"
+        :value="value"
+        :rows="row"
+        :class="[size, fullWidth ? 'full' : '']"
+      />
+
+      <i v-if="endIcon" class="material-icons input-icon-end input-icons">{{
+        endIcon
+      }}</i>
+    </div>
+
     <p class="helper-text">{{ helperText }}</p>
   </div>
 </template>
 
 <style scoped>
+input,
+textarea {
+  border: none;
+  outline: none;
+}
+input:hover,
+textarea:hover {
+  border: none;
+  outline: none;
+}
+input:focus,
+textarea:focus {
+  border: none;
+  outline: none;
+}
+
 /* INPUT ICONS */
 .input-icons {
   color: #828282;
-  position: absolute;
-  top: 38px;
 }
 
 .input-icon-start {
-  left: 12px;
+  margin-left: 12px;
 }
 .input-icon-end {
-  right: 73px;
-}
-
-.input-form:has(.input-icon-start) > input,
-.input-form:has(.input-icon-start) > textarea {
-  padding-left: 45px;
+  margin-right: 12px;
 }
 
 /* INPUT FORM */
 .input-form {
-  position: relative;
   display: flex;
   flex-direction: column;
 }
@@ -111,30 +123,38 @@ textarea {
   resize: none;
 }
 
-input,
-textarea {
+.input-wrapper {
   width: 200px;
-
+  display: flex;
+  align-items: center;
   border-radius: 8px;
   border: 1px solid #828282;
+}
+
+input,
+textarea {
+  border: none;
+  outline: none;
+  flex-grow: 1;
+  border-radius: 8px;
   padding: 12px 18px;
+  width: 100%;
 }
 
 input.sm {
   height: 40px !important;
   padding: 10px 12px !important;
 }
-input.full {
-  width: 100%;
+.full {
+  width: 100% !important;
 }
 
-input:hover,
-textarea:hover {
+.input-wrapper:hover {
   border: 1px solid #333333;
 }
 
-input:focus,
-textarea:focus {
+.input-wrapper:focus,
+.input-wrapper:focus-within {
   border: 1px solid #2962ff;
   color: #2962ff;
   outline: none;
@@ -144,7 +164,7 @@ textarea:focus {
   color: #d32f2f;
 }
 
-.input-error > input {
+.input-error > .input-wrapper {
   border: 1px solid #d32f2f;
 }
 
@@ -155,14 +175,15 @@ textarea:focus {
   color: #2962ff;
 }
 
-.input-error > input:hover {
+.input-error > .input-wrapper:hover {
   border: 1px solid #333333;
 }
-.input-error > input:focus {
+.input-error > .input-wrapper:focus,
+.input-error > .input-wrapper:focus-within {
   border: 1px solid #2962ff;
 }
 
-.input-disabled > input {
+.input-disabled > .input-wrapper {
   background-color: #f2f2f2;
   border: 1px solid #e0e0e0;
   color: #828282;
@@ -171,6 +192,14 @@ textarea:focus {
 
 .input-disabled:has(:focus) > .input-label {
   color: #333333;
+}
+
+.input-disabled > .input-wrapper {
+  border: 1px solid #e0e0e0 !important;
+}
+.input-disabled > .input-wrapper > input,
+.input-disabled > .input-wrapper > textarea {
+  background: #f2f2f2 !important;
 }
 
 /* LABEL */
