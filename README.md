@@ -59,7 +59,7 @@ To clone and run this application, you'll need [Git](https://git-scm.com) and [N
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/Whyzen/button-components.git
+$ git clone https://github.com/Whyzen/input-components.git
 
 # Install dependencies
 $ npm install
